@@ -30,3 +30,15 @@ let golf_list = [
 		power_ratio: "Medium"
 	}
 ];
+
+db.Golfs.remove({},
+	function(err,golfs){
+		if(err)
+			{console.log('Experienced a problem',err);}
+		else{
+			db.Golfs.create(golf_list, function(err,myGolfs){
+				if(err){return console.log('No Problems',err);}
+				process.exit();
+			});
+		}
+});

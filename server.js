@@ -73,15 +73,18 @@ app.get('/api/profile', function(req, res) {
 // Show all golfs
 
 app.get('/api/golfs', function (req, res) {
-  db.golfs.find().exec(function(err, golfs) {
+  db.Golfs.find().exec(function(err, golfs) {
     if (err) {return console.log("Index error: " + err); }
     res.json(golfs);
   });
 });
 
 // Show one golfs
-app.get('api/golfs/:id', function(req, res) {
-  db.Golf.findOne({_id: req.params.id}, function(err, data) {
+app.get('/api/golfs/:id', function(req, res) {
+
+  // res.json(req.params.id);
+
+  db.Golfs.find({_id: req.params.id}, function(err, data) {
     res.json(data);
   });
 });
@@ -106,7 +109,7 @@ newGolf.save(function(err, golfs) {
 
 // Update golf
 app.put('/api/golfs/:id', function(req, res) {
-  db.Golf.findOne({_id: req.params.id}, function(err, golf) {
+  db.Golfs.findOne({_id: req.params.id}, function(err, golf) {
     if (err) {
       return console.log("Error is " + err);
     }
@@ -122,7 +125,7 @@ app.put('/api/golfs/:id', function(req, res) {
 // Delete workout
 app.delete('/api/golfs/:id', function(req, res) {
   var golfId = req.params.id;
-  db.Golf.findOneAndRemove({_id: golfId }, function(err, deletedGolf) {
+  db.Golfs.findOneAndRemove({_id: golfId }, function(err, deletedGolf) {
     res.send("Golf was deleted!");
   });
 });
