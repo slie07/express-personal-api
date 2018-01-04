@@ -90,15 +90,16 @@ app.get('/api/golfs/:id', function(req, res) {
 });
 
 app.post('/api/golfs', function(req, res) {
-  var newGolf = new db.golf({
+  var newGolf = new db.Golfs({
       surfaces: req.body.surfaces,
       equipments: req.body.equipments,
       distances: req.body.distances,
       power_ratio: req.body.power_ratio
   });
 
+console.log(newGolf);
 
-newGolf.save(function(err, golfs) {
+db.Golfs.create(newGolf, function(err, golfs) {
   if (err) {
     return console.log("Error is: " + err);
     }
@@ -109,20 +110,16 @@ newGolf.save(function(err, golfs) {
 
 // Update golf
 app.put('/api/golfs/:id', function(req, res) {
-  db.Golfs.findOne({_id: req.params.id}, function(err, golf) {
+  db.Golfs.findOneAndUpdate({_id: req.params.id}, {$set:{surfaces:req.body.surfaces, equipments:req.body.equipments, distances: req.body.distances, power_ratio: req.body.power_ratio}}, {new: true}, function(err, golfs) {
     if (err) {
       return console.log("Error is " + err);
     }
-    golf.surfaces = req.body.surfaces;
-    golf.equipments = req.body.equipments;
-    golf.distances = req.body.distances;
-    golf.power_ratio = req.body.power_ratio;
-    golf.save();
     res.json(golfs);
+  
   });
 });
 
-// Delete workout
+// Delete golf
 app.delete('/api/golfs/:id', function(req, res) {
   var golfId = req.params.id;
   db.Golfs.findOneAndRemove({_id: golfId }, function(err, deletedGolf) {
