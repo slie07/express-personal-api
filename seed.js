@@ -13,3 +13,20 @@
 //   console.log("Created new campsite", campsite._id)
 //   process.exit(); // we're all done! Exit the program.
 // })
+
+let db = require('./models');
+
+let golf_list = [
+	{
+		surfaces: "Green",
+  		equipments: "Putter",
+  		distances: 0,
+  		power_ratio: "Low"
+	},
+	{
+		surfaces: "Rough",
+		equipments: "Wedge",
+		distances: 70,
+		power_ratio: "Medium"
+	}
+];
